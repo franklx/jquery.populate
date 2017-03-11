@@ -17,16 +17,16 @@ jQuery.fn.populate = function(obj, options) {
       // do nothing
     } else if(obj.constructor == Object) {
       for(var prop in obj) {
-        var name	= path + (path == '' ? prop : '[' +prop+ ']');
+        var name = path + (path == '' ? prop : '[' +prop+ ']');
         parseJSON(obj[prop], name);
       }
     }
 
     else if(obj.constructor == Array) {
       for(var i = 0; i < obj.length; i++) {
-        var index	= options.useIndices ? i : '';
-        index		= options.phpNaming ? '[' +index+']' : index;
-        var name	= path + index;
+        var index = options.useIndices ? i : '';
+        index = options.phpNaming ? '[' +index+']' : index;
+        var name = path + index;
         parseJSON(obj[i], name);
       }
       // assignment (values)
@@ -67,17 +67,17 @@ jQuery.fn.populate = function(obj, options) {
   }
 
   function populateElement(parentElement, name, value) {
-    var selector	= options.identifier == 'id' ? '#' + name : '[' +options.identifier+ '="' +name+ '"]';
-    var element		= jQuery(selector, parentElement);
-    value			= value.toString();
-    value			= value == 'null' ? '' : value;
+    var selector = options.identifier == 'id' ? '#' + name : '[' +options.identifier+ '="' +name+ '"]';
+    var element = jQuery(selector, parentElement);
+    value = value.toString();
+    value = value == 'null' ? '' : value;
     element.html(value);
   }
 
   function populateFormElement(form, name, value) {
     // check that the named element exists in the form
-    var name	= getElementName(name); // handle non-php naming
-    var element	= form[name];
+    var name = getElementName(name); // handle non-php naming
+    var element = form[name];
 
     // if the form element doesn't exist, check if there is a tag with that id
     if(element == undefined) {
@@ -163,8 +163,8 @@ jQuery.fn.populate = function(obj, options) {
         case 'textarea':
         case 'submit':
         default:
-          value			= value == null ? '' : value;
-          element.value	= value;
+          value = value == null ? '' : value;
+          element.value = value;
 
       }
 
@@ -184,28 +184,24 @@ jQuery.fn.populate = function(obj, options) {
 
   // options
   var options = jQuery.extend({
-    phpNaming:			true,
-      phpIndices:			false,
-      resetForm:			true,
-      identifier:			'id',
-      debug:				false
+    phpNaming: true,
+    useIndices: true,
+    resetForm: true,
+    identifier: 'id',
+    debug: false
   }, options);
-
-  if(options.phpIndices) {
-    options.phpNaming = true;
-  }
 
   // ------------------------------------------------------------------------------------------
   // convert hierarchical JSON to flat array
 
-  var arr	= [];
+  var arr = [];
   parseJSON(obj);
 
   if(options.debug) {
     _populate = {
-      arr:		arr,
-      obj:		obj,
-      elements:	[]
+      arr: arr,
+      obj: obj,
+      elements: []
     }
   }
 
@@ -214,8 +210,8 @@ jQuery.fn.populate = function(obj, options) {
 
   this.each(function(){
     // variables
-    var tagName	= this.tagName.toLowerCase();
-    var method	= tagName == 'form' ? populateFormElement : populateElement;
+    var tagName = this.tagName.toLowerCase();
+    var method = tagName == 'form' ? populateFormElement : populateElement;
 
     // reset form?
     if(tagName == 'form' && options.resetForm) {
