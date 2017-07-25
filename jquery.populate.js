@@ -67,9 +67,11 @@ jQuery.fn.populate = function(obj, options) {
     function populateElement(parentElement, name, value) {
         var selector = options.identifier == 'id' ? '#' + name : '[' + options.identifier + '="' + name + '"]';
         var element = jQuery(selector, parentElement);
-        value = value.toString();
-        value = value == 'null' ? '' : value;
-        element.html(value);
+        if (!($.adapt && $.adapt.set(element, value))) {
+            value = value.toString();
+            value = value == "null" ? "" : value;
+            element.html(value);
+        }
     }
 
     function populateFormElement(form, name, value) {
@@ -109,10 +111,9 @@ jQuery.fn.populate = function(obj, options) {
             // grab the element
             var element = elements[e];
             // skip undefined elements or function objects (IE only)
-            if (!element || typeof element == 'undefined' ||
-                typeof element == 'function') {
-                continue;
-            }
+            if (!element || typeof element == 'undefined' || typeof element == 'function') continue;
+            // skip elements with "skip" attribute set
+            if (element.getAttribute && element.getAttribute("skip")) continue;
 
             // anything else, process
             switch (element.type || element.tagName) {
@@ -161,8 +162,10 @@ jQuery.fn.populate = function(obj, options) {
                 case 'textarea':
                 case 'submit':
                 default:
-                    value = value == null ? '' : value;
-                    element.value = value;
+                    if (!($.adapt && $.adapt.set($(element), value))) {
+                        value = value == null ? '' : value;
+                        element.value = value;
+                    }
 
             }
 
@@ -182,8 +185,8 @@ jQuery.fn.populate = function(obj, options) {
 
     // options
     var options = jQuery.extend({
-        phpNaming: true,
-        useIndices: true,
+        phpNaming: false,
+        useIndices: false,
         resetForm: true,
         identifier: 'id',
         debug: false
@@ -226,3 +229,4 @@ jQuery.fn.populate = function(obj, options) {
 
     return this;
 };
+// vim: set ts=8 sts=4 sw=4 et sta :
