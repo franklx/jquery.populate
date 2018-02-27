@@ -1,0 +1,19 @@
+{
+  "name": "jquery-populate",
+  "version": "1.0.0",
+  "description": "jquery populate plugin",
+  "main": "jquery.populate.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/franklx/jquery.populate.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/franklx/jquery.populate/issues"
+  },
+  "homepage": "https://github.com/franklx/jquery.populate#readme"
+}
